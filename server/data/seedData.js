@@ -1,0 +1,321 @@
+const bcrypt = require('bcryptjs');
+const { stores } = require('../config/db');
+
+const seedData = async () => {
+  try {
+    // Check if courses exist
+    const existingCourses = stores.Course.find();
+    if (existingCourses.length > 0) {
+      console.log('[Seed] Database already initialized with seed data.');
+      return;
+    }
+
+    console.log('[Seed] Populating initial sample data...');
+
+    const salt = await bcrypt.genSalt(10);
+    const studentPass = await bcrypt.hash('student123', salt);
+    const instructorPass = await bcrypt.hash('instructor123', salt);
+
+    // Seed Demo Users
+    const student = stores.User.insertOne({
+      _id: 'user_student_demo',
+      name: 'Alex Rivera',
+      email: 'student@example.com',
+      password: studentPass,
+      role: 'student',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250',
+      bio: 'Full Stack Web Dev Enthusiast & UI Designer',
+      xp: 850,
+      badges: ['Fast Learner', 'Quiz Master', 'Welcome Onboard'],
+      enrolledCourses: ['course_react_101', 'course_node_201']
+    });
+
+    const instructor = stores.User.insertOne({
+      _id: 'user_instructor_demo',
+      name: 'Dr. Sarah Jenkins',
+      email: 'instructor@example.com',
+      password: instructorPass,
+      role: 'instructor',
+      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250',
+      bio: 'Senior Software Architect & Computer Science Professor with 12+ years experience.',
+      xp: 3400,
+      badges: ['Top Instructor', 'Course Creator', 'Tech Author'],
+      enrolledCourses: []
+    });
+
+    // Seed Courses
+    const courses = [
+      {
+        _id: 'course_react_101',
+        title: 'Modern React & Next.js Masterclass: From Beginner to Pro',
+        description: 'Master modern frontend development using React 18, Hooks, State Management, Custom Components, and Next.js App Router with real-world project builds.',
+        category: 'Web Development',
+        level: 'Intermediate',
+        price: 49.99,
+        thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=800&auto=format&fit=crop',
+        instructor: {
+          id: instructor._id,
+          name: instructor.name,
+          avatar: instructor.avatar
+        },
+        rating: 4.9,
+        totalRatings: 128,
+        totalStudents: 1420,
+        modules: [
+          {
+            id: 'mod_1',
+            title: 'Module 1: React Fundamentals & JSX',
+            lessons: [
+              {
+                id: 'les_101',
+                title: 'Introduction to React & Virtual DOM',
+                duration: '08:45',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                description: 'Understand how React works under the hood with Virtual DOM diffing and component tree reconciliation.',
+                resources: [
+                  { name: 'React 18 Architecture Cheat Sheet.pdf', url: '#' },
+                  { name: 'Starter Starter Code.zip', url: '#' }
+                ]
+              },
+              {
+                id: 'les_102',
+                title: 'Components, Props & State Management',
+                duration: '12:30',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                description: 'Learn component breakdown, passing props, destructuring, and managing dynamic local state with useState.',
+                resources: [
+                  { name: 'State Management Guide.md', url: '#' }
+                ]
+              }
+            ],
+            quiz: {
+              id: 'quiz_mod_1',
+              title: 'React Fundamentals Assessment',
+              passingScore: 70,
+              questions: [
+                {
+                  id: 'q1',
+                  type: 'multiple-choice',
+                  question: 'What is the primary function of the React Virtual DOM?',
+                  options: [
+                    'Directly manipulate browser DOM elements for speed',
+                    'Maintain an in-memory representation to optimize actual DOM updates',
+                    'Replace CSS styles dynamically in real-time',
+                    'Compile JavaScript code into native C++'
+                  ],
+                  correctAnswer: 'Maintain an in-memory representation to optimize actual DOM updates',
+                  explanation: 'React compares Virtual DOM snapshots with reconciliation diffing to batch real DOM updates efficiently.'
+                },
+                {
+                  id: 'q2',
+                  type: 'true-false',
+                  question: 'Props passed to a React component are immutable and read-only inside that component.',
+                  options: ['True', 'False'],
+                  correctAnswer: 'True',
+                  explanation: 'Components must never modify their own props directly.'
+                },
+                {
+                  id: 'q3',
+                  type: 'fill-blank',
+                  question: 'The React Hook used to declare state in functional components is called use_____',
+                  correctAnswer: 'State',
+                  explanation: 'useState is the hook used to manage reactive state.'
+                }
+              ]
+            }
+          },
+          {
+            id: 'mod_2',
+            title: 'Module 2: Advanced Hooks & Performance',
+            lessons: [
+              {
+                id: 'les_201',
+                title: 'Mastering useEffect & Side-Effects Lifecycle',
+                duration: '15:10',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                description: 'Deep dive into dependencies array, cleanup functions, memory leak prevention, and custom hooks.',
+                resources: [
+                  { name: 'useEffect-patterns.pdf', url: '#' }
+                ]
+              }
+            ],
+            quiz: {
+              id: 'quiz_mod_2',
+              title: 'Advanced Hooks Quiz',
+              passingScore: 60,
+              questions: [
+                {
+                  id: 'q2_1',
+                  type: 'multiple-choice',
+                  question: 'When does the cleanup function returned by useEffect execute?',
+                  options: [
+                    'Before the component unmounts or before re-running the effect',
+                    'Only when the browser window closes',
+                    'Immediately before initial render',
+                    'Only on server side rendering'
+                  ],
+                  correctAnswer: 'Before the component unmounts or before re-running the effect',
+                  explanation: 'The cleanup function handles subscriptions and timer clearing.'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        _id: 'course_node_201',
+        title: 'Full Stack Node.js, Express & MongoDB Architecture',
+        description: 'Build production-ready RESTful APIs, JWT authentication, MongoDB schemas with Mongoose, error handling middleware, and secure file uploads.',
+        category: 'Backend Development',
+        level: 'Intermediate',
+        price: 59.99,
+        thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop',
+        instructor: {
+          id: instructor._id,
+          name: instructor.name,
+          avatar: instructor.avatar
+        },
+        rating: 4.8,
+        totalRatings: 94,
+        totalStudents: 980,
+        modules: [
+          {
+            id: 'mod_node_1',
+            title: 'Module 1: Express Server & Routing Fundamentals',
+            lessons: [
+              {
+                id: 'les_node_101',
+                title: 'Building a RESTful API Architecture',
+                duration: '14:20',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                description: 'Understanding HTTP methods, JSON responses, request parsing, and modular express routes.',
+                resources: [{ name: 'Express-routing-cheat-sheet.pdf', url: '#' }]
+              }
+            ],
+            quiz: {
+              id: 'quiz_node_1',
+              title: 'Node.js Express Fundamentals',
+              passingScore: 70,
+              questions: [
+                {
+                  id: 'qn1',
+                  type: 'multiple-choice',
+                  question: 'Which Express middleware method is used to parse JSON body payloads?',
+                  options: ['express.json()', 'express.parse()', 'express.body()', 'express.urlencoded()'],
+                  correctAnswer: 'express.json()',
+                  explanation: 'express.json() parses incoming JSON requests.'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        _id: 'course_ux_301',
+        title: 'UI/UX Design Systems & Figma Masterclass',
+        description: 'Design breathtaking digital experiences with Figma, glassmorphism, responsive grids, color theory, design tokens, and interactive micro-animations.',
+        category: 'Design',
+        level: 'Beginner',
+        price: 39.99,
+        thumbnail: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop',
+        instructor: {
+          id: instructor._id,
+          name: 'Elena Rostova',
+          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=250'
+        },
+        rating: 5.0,
+        totalRatings: 210,
+        totalStudents: 2310,
+        modules: [
+          {
+            id: 'mod_ux_1',
+            title: 'Module 1: Figma Auto-Layout & Design Tokens',
+            lessons: [
+              {
+                id: 'les_ux_101',
+                title: 'Design Systems & Component Variants',
+                duration: '11:15',
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                description: 'Learn component design tokens, auto-layout constraints, and micro-animations.',
+                resources: [{ name: 'Figma-Design-Tokens-Kit.fig', url: '#' }]
+              }
+            ],
+            quiz: {
+              id: 'quiz_ux_1',
+              title: 'UI/UX Design Fundamentals',
+              passingScore: 60,
+              questions: [
+                {
+                  id: 'qux1',
+                  type: 'true-false',
+                  question: 'Figma Auto Layout allows components to automatically adjust their size based on content length.',
+                  options: ['True', 'False'],
+                  correctAnswer: 'True',
+                  explanation: 'Auto layout is a powerful feature for responsive UI layouts.'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ];
+
+    courses.forEach(c => stores.Course.insertOne(c));
+
+    // Seed Sample Reviews
+    stores.Review.insertOne({
+      courseId: 'course_react_101',
+      userId: student._id,
+      userName: student.name,
+      userAvatar: student.avatar,
+      rating: 5,
+      comment: 'Outstanding course! The video clarity, quizzes, and instant certificate generator made this standard above any other platform.',
+      createdAt: new Date().toISOString()
+    });
+
+    // Seed Sample Progress for Demo Student
+    stores.Progress.insertOne({
+      userId: student._id,
+      courseId: 'course_react_101',
+      completedLessons: ['les_101'],
+      videoTimestamps: { les_101: 240 },
+      quizScores: { quiz_mod_1: 100 },
+      completionPercentage: 50,
+      isCompleted: false,
+      enrolledAt: new Date().toISOString()
+    });
+
+    // Seed Sample Discussions
+    stores.Discussion.insertOne({
+      courseId: 'course_react_101',
+      title: 'Best practice for passing state between deeply nested components?',
+      content: 'Should we rely on React Context API or Redux Toolkit when building large scale enterprise LMS applications?',
+      author: {
+        id: student._id,
+        name: student.name,
+        avatar: student.avatar,
+        role: 'student'
+      },
+      replies: [
+        {
+          _id: 'rep_1',
+          content: 'For mid-level apps, React Context + custom hooks works great! Redux Toolkit or Zustand is recommended if state updates occur extremely frequently across unrelated components.',
+          author: {
+            id: instructor._id,
+            name: instructor.name,
+            avatar: instructor.avatar,
+            role: 'instructor'
+          },
+          createdAt: new Date().toISOString()
+        }
+      ],
+      createdAt: new Date().toISOString()
+    });
+
+    console.log('[Seed] Successfully seeded LMS database with demo courses, users, and content!');
+  } catch (error) {
+    console.error('Error seeding database:', error);
+  }
+};
+
+module.exports = seedData;

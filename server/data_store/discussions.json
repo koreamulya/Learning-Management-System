@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "id_1784986123470_16glv1",
+    "createdAt": "2026-07-25T13:28:43.470Z",
+    "updatedAt": "2026-07-25T13:28:43.470Z",
+    "courseId": "course_react_101",
+    "title": "Best practice for passing state between deeply nested components?",
+    "content": "Should we rely on React Context API or Redux Toolkit when building large scale enterprise LMS applications?",
+    "author": {
+      "id": "user_student_demo",
+      "name": "Alex Rivera",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250",
+      "role": "student"
+    },
+    "replies": [
+      {
+        "_id": "rep_1",
+        "content": "For mid-level apps, React Context + custom hooks works great! Redux Toolkit or Zustand is recommended if state updates occur extremely frequently across unrelated components.",
+        "author": {
+          "id": "user_instructor_demo",
+          "name": "Dr. Sarah Jenkins",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250",
+          "role": "instructor"
+        },
+        "createdAt": "2026-07-25T13:28:43.470Z"
+      }
+    ]
+  }
+]

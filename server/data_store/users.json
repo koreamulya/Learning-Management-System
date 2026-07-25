@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "user_student_demo",
+    "createdAt": "2026-07-25T13:28:43.433Z",
+    "updatedAt": "2026-07-25T13:28:43.434Z",
+    "name": "Alex Rivera",
+    "email": "student@example.com",
+    "password": "$2a$10$WigQQIy8zfGplSiUWV.5eOX7Lsg5H3xnc0nK5FLx8NMQqEzaTGgM2",
+    "role": "student",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250",
+    "bio": "Full Stack Web Dev Enthusiast & UI Designer",
+    "xp": 850,
+    "badges": [
+      "Fast Learner",
+      "Quiz Master",
+      "Welcome Onboard"
+    ],
+    "enrolledCourses": [
+      "course_react_101",
+      "course_node_201"
+    ]
+  },
+  {
+    "_id": "user_instructor_demo",
+    "createdAt": "2026-07-25T13:28:43.439Z",
+    "updatedAt": "2026-07-25T13:28:43.439Z",
+    "name": "Dr. Sarah Jenkins",
+    "email": "instructor@example.com",
+    "password": "$2a$10$WigQQIy8zfGplSiUWV.5eOkR.lt6xIlmjXTmteXY32JbkbfrSX.4a",
+    "role": "instructor",
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250",
+    "bio": "Senior Software Architect & Computer Science Professor with 12+ years experience.",
+    "xp": 3400,
+    "badges": [
+      "Top Instructor",
+      "Course Creator",
+      "Tech Author"
+    ],
+    "enrolledCourses": []
+  },
+  {
+    "_id": "id_1784987036253_cz42zr",
+    "createdAt": "2026-07-25T13:43:56.253Z",
+    "updatedAt": "2026-07-25T13:43:56.254Z",
+    "name": "Amulya",
+    "email": "amulyasurveys@gmail.com",
+    "password": "$2a$10$6lGbZLP9RMxSx6q7UR95segxNLqfK1H1hjyR7uyBLXcgjCRfewXmO",
+    "role": "student",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Amulya",
+    "bio": "Enthusiastic online learner on LMS",
+    "xp": 100,
+    "badges": [
+      "Welcome Onboard"
+    ],
+    "enrolledCourses": []
+  }
+]

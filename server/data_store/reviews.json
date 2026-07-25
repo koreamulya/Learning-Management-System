@@ -1,0 +1,13 @@
+[
+  {
+    "_id": "id_1784986123442_n8ljcv",
+    "createdAt": "2026-07-25T13:28:43.442Z",
+    "updatedAt": "2026-07-25T13:28:43.442Z",
+    "courseId": "course_react_101",
+    "userId": "user_student_demo",
+    "userName": "Alex Rivera",
+    "userAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250",
+    "rating": 5,
+    "comment": "Outstanding course! The video clarity, quizzes, and instant certificate generator made this standard above any other platform."
+  }
+]
