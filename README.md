@@ -117,9 +117,7 @@ npm run dev
 
 ---
 
-## 📸 Screenshots
 
-(Add screenshots here)
 
 ---
 
