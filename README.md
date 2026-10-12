@@ -84,7 +84,7 @@ README.md
 ### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Online-Learning-Platform.git
+git clone https://github.com/koreamulya/Learning-Management-System.git
 ```
 
 ### Install Dependencies
